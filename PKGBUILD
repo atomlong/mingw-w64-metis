@@ -1,6 +1,6 @@
 pkgname=mingw-w64-metis
 pkgver=5.2.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Serial Graph Partitioning and Fill-reducing Matrix Ordering (mingw-w64)'
 url="https://github.com/KarypisLab/METIS"
 license=('Apache')
@@ -24,6 +24,7 @@ prepare () {
   curl -L https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-metis/0003-WIN32-Install-RUNTIME-to-bin.patch | patch -p1
   sed -i '/add_subdirectory("programs")/d' CMakeLists.txt
   echo "target_link_libraries(metis GKlib)" >> libmetis/CMakeLists.txt
+  sed -i "s|march=native|march=nocona|g" conf/gkbuild.cmake
 }
 
 build() {
